@@ -2,4 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.liubuyao.utils">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true">
+       <!--    声明Provider应用启动时初始化library    -->
+        <provider
+            android:authorities="${applicationId}.SuperUtilsProvider"
+            android:name=".provider.SuperUtilsProvider"
+            android:exported="false"/>
+    </application>
 </manifest>
