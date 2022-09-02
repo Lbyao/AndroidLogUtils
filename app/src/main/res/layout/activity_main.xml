@@ -13,6 +13,13 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnTest"
+        android:text="崩溃"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnOpen"
+        android:text="保存文件开关"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

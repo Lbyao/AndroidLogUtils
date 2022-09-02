@@ -1,12 +1,21 @@
 package com.liubuyao.utils
 
+import android.app.Application
+
 /**
  * 工具类的中间类直接调用方法通过该类处理，适当的解耦Util直接的联系
  * ，如果后续更换，不用修改调用该功能的类
  *
  * @author lby
  */
-object MyUtils {
+internal object MyUtils {
+
+    /**
+     * 获取Application
+     */
+    fun getApp(): Application {
+        return AppUtils.getApp()
+    }
 
     /**
      * 获取sd卡是否可用
@@ -76,11 +85,41 @@ object MyUtils {
         return str.toString()
     }
 
+    /**
+     * 是否是空白字符串
+     */
     fun isSpace(string: String?): Boolean {
         return StringUtils.isSpace(string)
     }
 
+    /**
+     * 写入文件
+     */
     fun writeToFile(pathFile: String, content: String, append: Boolean) {
         FileUtils.writeToFile(pathFile, content, append)
+    }
+
+    /**
+     * 是否获取到权限
+     * @param permissions 要查询的多个权限
+     *
+     * @return 有一个没获取到权限就会返回false
+     */
+    fun isGrantedPermission(vararg permissions: String): Boolean {
+        return PermissionsUtils.getIsGrantedPermission(*permissions)
+    }
+
+    /**
+     * 是否获取到权限
+     * @param permission 要查询的权限
+     *
+     * @return true 有 false 无
+     */
+    fun isGrantedPermission(permission: String): Boolean {
+        return PermissionsUtils.getIsGrantedPermission(permission)
+    }
+
+    fun showToast(content: String) {
+        ToastUtils.showToast(content)
     }
 }

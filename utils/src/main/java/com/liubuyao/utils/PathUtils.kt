@@ -30,7 +30,7 @@ object PathUtils {
         return if (!MyUtils.getSDCardCanUsed()) {
             return ""
         } else {
-            val externalCacheDir = AppUtils.getApp().externalCacheDir ?: return ""
+            val externalCacheDir = MyUtils.getApp().externalCacheDir ?: return ""
             getAbsolutePathByFile(externalCacheDir)
         }
     }

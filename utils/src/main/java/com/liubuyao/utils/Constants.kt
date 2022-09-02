@@ -1,5 +1,6 @@
 package com.liubuyao.utils
 
+import android.Manifest
 import java.io.File
 
 /**
@@ -7,11 +8,13 @@ import java.io.File
  *
  * @author lby
  */
-object Constants {
+internal object Constants {
 
     /**
      * “/”-->斜杠分割线
      */
     val separtor = File.separatorChar
+
+    val WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE
 
 }

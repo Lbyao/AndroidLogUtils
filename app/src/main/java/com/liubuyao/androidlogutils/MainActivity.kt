@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
-import kotlinx.coroutines.GlobalScope
+import com.liubuyao.utils.CrashUtils
 
 /**
  * @author lby
@@ -12,6 +12,7 @@ import kotlinx.coroutines.GlobalScope
 class MainActivity : AppCompatActivity() {
 
     val list = mutableListOf<String>()
+    var isOpen = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +20,11 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<AppCompatButton>(R.id.btnTest).setOnClickListener {
             findViewById<TextView>(R.id.tvText).text = list[2]
+        }
+
+        findViewById<AppCompatButton>(R.id.btnOpen).setOnClickListener {
+            isOpen = !isOpen
+            CrashUtils.openCrashSaveFile(isOpen)
         }
 
     }
