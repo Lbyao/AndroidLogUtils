@@ -41,12 +41,33 @@ object MyUtils {
      */
     fun getPhoneInfo(): String {
         val map = hashMapOf<String, String>()
-        map["VersionName"] = AppUtils.getVersionName()
         map["VersionCode"] = "" + AppUtils.getVersionCode()
+        map["SDKVersionCode"] = AppUtils.getSDKVersionCode().toString()
         map["SDKVersionName"] = "" + AppUtils.getSDKVersionName()
         map["Manufacturer"] = "" + AppUtils.getManufacturer()
         map["Model"] = AppUtils.getModel()
         map["ABI"] = AppUtils.getABI()
+        val str = StringBuilder("=".repeat(20) + "PHONE_INFO_HEAD" + "=".repeat(20) + "\n")
+        for (info in map) {
+            str.append(info.key).append(" ====> ").append(info.value).append("\n")
+        }
+        str.append("=".repeat(20) + "PHONE_INFO_HEAD_END" + "=".repeat(20) + "\n")
+        return str.toString()
+    }
+
+    /**
+     * 获取手机信息
+     */
+    fun getPhoneInfo(thread: Thread): String {
+        val map = hashMapOf<String, String>()
+        map["VersionCode"] = "" + AppUtils.getVersionCode()
+        map["VersionName"] = "" + AppUtils.getVersionName()
+        map["SDKVersionCode"] = AppUtils.getSDKVersionCode().toString()
+        map["SDKVersionName"] = "" + AppUtils.getSDKVersionName()
+        map["Manufacturer"] = "" + AppUtils.getManufacturer()
+        map["Model"] = AppUtils.getModel()
+        map["ABI"] = AppUtils.getABI()
+        map["Thread"] = thread.name
         val str = StringBuilder("=".repeat(20) + "PHONE_INFO_HEAD" + "=".repeat(20) + "\n")
         for (info in map) {
             str.append(info.key).append(" ====> ").append(info.value).append("\n")

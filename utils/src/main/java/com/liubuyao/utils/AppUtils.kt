@@ -42,7 +42,7 @@ object AppUtils {
         }
         val pm = getApp().packageManager
         val packageInfo = pm.getPackageInfo(packageName, 0)
-        return if (packageInfo == null) "" else packageInfo.packageName
+        return if (packageInfo == null) "" else packageInfo.versionName
     }
 
     fun getVersionCode(): Int {

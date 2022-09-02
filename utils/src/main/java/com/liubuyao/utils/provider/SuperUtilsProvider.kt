@@ -15,8 +15,8 @@ import com.liubuyao.utils.MyUtils
  */
 class SuperUtilsProvider : ContentProvider() {
     override fun onCreate(): Boolean {
-        CrashUtils.init(MyUtils.getExternalAppPath())
         AppUtils.init(context)
+        CrashUtils.init(MyUtils.getExternalAppPath())
         return false
     }
 
