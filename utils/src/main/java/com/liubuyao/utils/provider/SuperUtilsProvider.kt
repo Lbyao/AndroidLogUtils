@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.net.Uri
 import com.liubuyao.utils.AppUtils
 import com.liubuyao.utils.CrashUtils
+import com.liubuyao.utils.LogUtils
 import com.liubuyao.utils.MyUtils
 
 /**
@@ -17,6 +18,7 @@ class SuperUtilsProvider : ContentProvider() {
     override fun onCreate(): Boolean {
         AppUtils.init(context)
         CrashUtils.init(MyUtils.getExternalAppPath())
+        LogUtils.init()
         return false
     }
 

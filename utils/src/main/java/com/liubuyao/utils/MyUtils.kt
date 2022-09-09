@@ -56,6 +56,7 @@ internal object MyUtils {
         map["Manufacturer"] = "" + AppUtils.getManufacturer()
         map["Model"] = AppUtils.getModel()
         map["ABI"] = AppUtils.getABI()
+        map["Thread"] = ThreadUtils.getCurrentThreadName()
         val str = StringBuilder("=".repeat(20) + "PHONE_INFO_HEAD" + "=".repeat(20) + "\n")
         for (info in map) {
             str.append(info.key).append(" ====> ").append(info.value).append("\n")
@@ -76,7 +77,7 @@ internal object MyUtils {
         map["Manufacturer"] = "" + AppUtils.getManufacturer()
         map["Model"] = AppUtils.getModel()
         map["ABI"] = AppUtils.getABI()
-        map["Thread"] = thread.name
+        map["Thread"] = ThreadUtils.getThreadName(thread)
         val str = StringBuilder("=".repeat(20) + "PHONE_INFO_HEAD" + "=".repeat(20) + "\n")
         for (info in map) {
             str.append(info.key).append(" ====> ").append(info.value).append("\n")
