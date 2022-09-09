@@ -9,7 +9,7 @@ class NormalHandler : BaseHandler() {
     override fun handle(any: Any?, onFormatListener: OnFormatListener): Boolean {
         when (any) {
             is String, is Boolean, is Int, is Long, is Float, is Double, is Char, is Byte -> {
-                onFormatListener.format(formatData(any))
+                onFormatListener.format(this::class.simpleName+"------>"+formatData(any))
                 return true
             }
         }
