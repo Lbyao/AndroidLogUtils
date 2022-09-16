@@ -1,16 +1,17 @@
 package com.liubuyao.utils.handler
 
+import android.net.Uri
 import com.liubuyao.utils.MyUtils
 
 /**
- * 解析数组
+ * uri 解析
  *
  * @author lby
  */
-class ArrayHandler : BaseHandler() {
+class UriHandler : BaseHandler() {
     override fun handle(any: Any?, onFormatListener: OnFormatListener): Boolean {
         when (any) {
-            is Array<*> -> {
+            is Uri -> {
                 onFormatListener.format(this::class.simpleName + "------>" + formatData(any))
                 return true
             }
@@ -18,7 +19,7 @@ class ArrayHandler : BaseHandler() {
         return false
     }
 
-    private fun formatData(any: Array<*>): String {
-        return MyUtils.arrayToJsonString(any)
+    private fun formatData(uri: Uri, isFormat: Boolean = true): String {
+        return MyUtils.uriToString(uri)
     }
 }

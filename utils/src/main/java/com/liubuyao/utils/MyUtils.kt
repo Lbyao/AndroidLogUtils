@@ -1,6 +1,9 @@
 package com.liubuyao.utils
 
 import android.app.Application
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
 
 /**
  * 工具类的中间类直接调用方法通过该类处理，适当的解耦Util直接的联系
@@ -122,5 +125,54 @@ internal object MyUtils {
 
     fun showToast(content: String) {
         ToastUtils.showToast(content)
+    }
+
+    /**
+     * bundle 打印成string
+     */
+    fun bundleToJsonString(bundle: Bundle, isFormat: Boolean = true): String {
+        return JsonUtils.bundleToJsonString(bundle, isFormat)
+    }
+
+    /**
+     * bundle 打印成string
+     */
+    fun mapToJsonString(map: Map<*, *>, isFormat: Boolean = true): String {
+        return JsonUtils.mapToString(map, isFormat)
+    }
+
+    /**
+     * intent 打印成string
+     */
+    fun intentToString(intent: Intent, isFormat: Boolean = true): String {
+        return JsonUtils.intentToString(intent, isFormat)
+    }
+
+    /**
+     * uri 打印成string
+     */
+    fun uriToString(uri: Uri, isFormat: Boolean = true): String {
+        return JsonUtils.uriToString(uri, isFormat)
+    }
+
+    /**
+     * collection 打印成string
+     */
+    fun collectionToJsonString(collection: Collection<*>, isFormat: Boolean = true): String {
+        return JsonUtils.collectionToJsonString(collection, isFormat)
+    }
+
+    /**
+     * array 打印成string
+     */
+    fun arrayToJsonString(array: Array<*>, isFormat: Boolean = true): String {
+        return JsonUtils.arrayToJsonString(array, isFormat)
+    }
+
+    /**
+     * any 打印成string
+     */
+    fun anyToJsonString(any: Any, isFormat: Boolean = true): String {
+        return JsonUtils.anyToString(any, isFormat)
     }
 }

@@ -2,11 +2,9 @@ package com.liubuyao.androidlogutils
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import com.liubuyao.utils.CrashUtils
 import com.liubuyao.utils.LogUtils
-import com.liubuyao.utils.handler.NormalHandler
 
 /**
  * @author lby
@@ -23,13 +21,22 @@ class MainActivity : AppCompatActivity() {
         findViewById<AppCompatButton>(R.id.btnTest).setOnClickListener {
 //            findViewById<TextView>(R.id.tvText).text = list[2]
             LogUtils.d("btnTest")
+            val list = mutableListOf<User>()
+            list.add(User("test",2,false))
+            list.add(User("test2",22,true))
+            LogUtils.d(list)
+
+            val map = mutableMapOf<String,User>()
+            map["key1"] = User("test",2,false)
+            map["key2"] = User("test2",22,true)
+            LogUtils.d(map)
         }
 
         findViewById<AppCompatButton>(R.id.btnOpen).setOnClickListener {
             isOpen = !isOpen
             CrashUtils.openCrashSaveFile(isOpen)
             LogUtils.d(User("test",2,false),User("test2",22,true))
-            LogUtils.addHandler(NormalHandler())
+
         }
 
     }

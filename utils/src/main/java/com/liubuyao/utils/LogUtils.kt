@@ -27,6 +27,12 @@ object LogUtils {
     private var isLogSwitch = true
 
     /**
+     * 日志打印开关
+     */
+    @Volatile
+    private var isLogFormatSwitch = true
+
+    /**
      * 保存文件开关
      */
     @Volatile
@@ -53,6 +59,11 @@ object LogUtils {
         handlers.add(NormalHandler())
         handlers.add(ArrayHandler())
         handlers.add(CollectionHandler())
+        handlers.add(BundleHandler())
+        handlers.add(IntentHandler())
+        handlers.add(MapHandler())
+        handlers.add(ThrowableHandler())
+        handlers.add(UriHandler())
         handlers.add(DefaultHandler())
 
         val len = handlers.size
@@ -65,7 +76,7 @@ object LogUtils {
     }
 
     fun addHandler(handler: BaseHandler) {
-        handlers.add(handlers.size-1,handler)
+        handlers.add(handlers.size - 1, handler)
         d(handlers)
     }
 
@@ -145,7 +156,16 @@ object LogUtils {
     fun print(type: Int = D, tag: String, vararg content: Any?) {
         startHandler.handleObject(content, object : BaseHandler.OnFormatListener {
             override fun format(string: String) {
-                Log.println(type, tag, string)
+                if (isLogSwitch){
+                    val stringBuilder = StringBuilder()
+                    stringBuilder.append("=".repeat(20)).append("start").append("=".repeat(20))
+                        .append("\n").append(string).append("\n").append("=".repeat(20)).append("end")
+                        .append("=".repeat(20)).append("\n")
+                    Log.println(type, tag, stringBuilder.toString())
+                }
+                if (isFileSwitch){
+
+                }
             }
         })
     }
@@ -153,7 +173,16 @@ object LogUtils {
     fun print(type: Int = D, tag: String, content: Any?) {
         startHandler.handleObject(content, object : BaseHandler.OnFormatListener {
             override fun format(string: String) {
-                Log.println(type, tag, string)
+                if (isLogSwitch){
+                    val stringBuilder = StringBuilder()
+                    stringBuilder.append("=".repeat(20)).append("start").append("=".repeat(20))
+                        .append("\n").append(string).append("\n").append("=".repeat(20)).append("end")
+                        .append("=".repeat(20)).append("\n")
+                    Log.println(type, tag, stringBuilder.toString())
+                }
+                if (isFileSwitch){
+
+                }
             }
         })
     }
@@ -171,6 +200,11 @@ object LogUtils {
 
     fun setFileSwitch(open: Boolean): LogUtils {
         isFileSwitch = open
+        return this
+    }
+
+    fun setLogFormatSwitch(open: Boolean): LogUtils {
+        isLogFormatSwitch = open
         return this
     }
 

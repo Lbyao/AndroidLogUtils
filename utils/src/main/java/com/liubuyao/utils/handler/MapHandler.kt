@@ -3,22 +3,22 @@ package com.liubuyao.utils.handler
 import com.liubuyao.utils.MyUtils
 
 /**
- * 解析集合
+ * 解析map
  *
  * @author lby
  */
-class CollectionHandler : BaseHandler() {
+class MapHandler:BaseHandler() {
     override fun handle(any: Any?, onFormatListener: OnFormatListener): Boolean {
         when (any) {
-            is Collection<*> -> {
-                onFormatListener.format(this::class.simpleName+"------>"+formatData(any))
+            is Map<*,*> -> {
+                onFormatListener.format(this::class.simpleName + "------>" + formatData(any))
                 return true
             }
         }
         return false
     }
 
-    fun formatData(any: Collection<*>): String {
-        return MyUtils.collectionToJsonString(any)
+    private fun formatData(map: Map<*,*>): String {
+        return MyUtils.mapToJsonString(map)
     }
 }

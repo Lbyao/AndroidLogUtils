@@ -1,16 +1,17 @@
 package com.liubuyao.utils.handler
 
+import android.os.Bundle
 import com.liubuyao.utils.MyUtils
 
 /**
- * 解析集合
+ * 解析bundle
  *
  * @author lby
  */
-class CollectionHandler : BaseHandler() {
+class BundleHandler : BaseHandler() {
     override fun handle(any: Any?, onFormatListener: OnFormatListener): Boolean {
         when (any) {
-            is Collection<*> -> {
+            is Bundle -> {
                 onFormatListener.format(this::class.simpleName+"------>"+formatData(any))
                 return true
             }
@@ -18,7 +19,7 @@ class CollectionHandler : BaseHandler() {
         return false
     }
 
-    fun formatData(any: Collection<*>): String {
-        return MyUtils.collectionToJsonString(any)
+    private fun formatData(bundle: Bundle): String {
+        return MyUtils.bundleToJsonString(bundle)
     }
 }

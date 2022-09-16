@@ -3,14 +3,14 @@ package com.liubuyao.utils.handler
 import com.liubuyao.utils.MyUtils
 
 /**
- * 解析数组
+ * 解析异常
  *
  * @author lby
  */
-class ArrayHandler : BaseHandler() {
+class ThrowableHandler : BaseHandler() {
     override fun handle(any: Any?, onFormatListener: OnFormatListener): Boolean {
         when (any) {
-            is Array<*> -> {
+            is Throwable -> {
                 onFormatListener.format(this::class.simpleName + "------>" + formatData(any))
                 return true
             }
@@ -18,7 +18,7 @@ class ArrayHandler : BaseHandler() {
         return false
     }
 
-    private fun formatData(any: Array<*>): String {
-        return MyUtils.arrayToJsonString(any)
+    private fun formatData(throwable: Throwable): String {
+        return MyUtils.getThrowableInfoToString(throwable)
     }
 }
