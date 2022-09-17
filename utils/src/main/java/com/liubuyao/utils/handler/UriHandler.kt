@@ -20,6 +20,6 @@ class UriHandler : BaseHandler() {
     }
 
     private fun formatData(uri: Uri, isFormat: Boolean = true): String {
-        return MyUtils.uriToString(uri)
+        return MyUtils.uriToString(uri, isFormat)
     }
 }

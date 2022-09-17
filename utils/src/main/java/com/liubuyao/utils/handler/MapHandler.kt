@@ -18,7 +18,7 @@ class MapHandler:BaseHandler() {
         return false
     }
 
-    private fun formatData(map: Map<*,*>): String {
-        return MyUtils.mapToJsonString(map)
+    private fun formatData(map: Map<*,*>, isFormat: Boolean = true): String {
+        return MyUtils.mapToJsonString(map, isFormat)
     }
 }

@@ -11,14 +11,14 @@ class CollectionHandler : BaseHandler() {
     override fun handle(any: Any?, onFormatListener: OnFormatListener): Boolean {
         when (any) {
             is Collection<*> -> {
-                onFormatListener.format(this::class.simpleName+"------>"+formatData(any))
+                onFormatListener.format(this::class.simpleName + "------>" + formatData(any))
                 return true
             }
         }
         return false
     }
 
-    fun formatData(any: Collection<*>): String {
-        return MyUtils.collectionToJsonString(any)
+    private fun formatData(any: Collection<*>, isFormat: Boolean = true): String {
+        return MyUtils.collectionToJsonString(any, isFormat)
     }
 }

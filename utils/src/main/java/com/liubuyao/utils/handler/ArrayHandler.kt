@@ -18,7 +18,7 @@ class ArrayHandler : BaseHandler() {
         return false
     }
 
-    private fun formatData(any: Array<*>): String {
-        return MyUtils.arrayToJsonString(any)
+    private fun formatData(any: Array<*>, isFormat: Boolean = true): String {
+        return MyUtils.arrayToJsonString(any, isFormat)
     }
 }

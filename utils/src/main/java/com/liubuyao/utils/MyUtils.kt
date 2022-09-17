@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import java.util.*
 
 /**
  * 工具类的中间类直接调用方法通过该类处理，适当的解耦Util直接的联系
@@ -32,6 +33,13 @@ internal object MyUtils {
      */
     fun getNowDateByCrash(): String {
         return DateUtils.getNowDateToString(DateUtils.FORMAT_YMD_HMS_SAVE)
+    }
+
+    /**
+     * 获取当前时间，用于carsh保存文件时用
+     */
+    fun getNowDate(format: String): String {
+        return DateUtils.getNowDateToString(format)
     }
 
     /**
@@ -101,6 +109,13 @@ internal object MyUtils {
      */
     fun writeToFile(pathFile: String, content: String, append: Boolean) {
         FileUtils.writeToFile(pathFile, content, append)
+    }
+
+    /**
+     * 文件是否存在
+     */
+    fun fileExists(path: String): Boolean {
+        return FileUtils.fileExists(path)
     }
 
     /**
@@ -174,5 +189,41 @@ internal object MyUtils {
      */
     fun anyToJsonString(any: Any, isFormat: Boolean = true): String {
         return JsonUtils.anyToString(any, isFormat)
+    }
+
+    /**
+     * 截取字符串
+     */
+    fun subStr(bytes: ByteArray?, subLength: Int): String {
+        return StringUtils.subStr(bytes, subLength)
+    }
+
+    /**
+     * 删除文件
+     */
+    fun deleteFile(path: String): Boolean {
+        return FileUtils.deleteFile(path)
+    }
+
+    /**
+     * 获取某个文件同级的过滤后的文件列表
+     */
+    fun getFileList(path: String?, filterFilename: String, suffix: String): Array<String>? {
+        return FileUtils.getFileListByFile(path, filterFilename, suffix)
+    }
+
+    /**
+     * 从日志文件名获取日期
+     */
+    fun getDateByFileName(path: String?): String? {
+        return StringUtils.getDateByFileName(path)
+    }
+
+    fun getDataByStr(dateStr: String?, format: String = DateUtils.FORMAT_YMD_upload): Date? {
+        return DateUtils.getDataByStr(dateStr, format)
+    }
+
+    fun getNowDateTime(date: String): Long? {
+        return getDataByStr(date)?.time
     }
 }

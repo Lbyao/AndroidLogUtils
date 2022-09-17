@@ -14,7 +14,7 @@ class DefaultHandler : BaseHandler() {
         return true
     }
 
-    fun formatData(any: Any): String {
-        return MyUtils.anyToJsonString(any)
+    private fun formatData(any: Any, isFormat: Boolean = true): String {
+        return MyUtils.anyToJsonString(any, isFormat)
     }
 }

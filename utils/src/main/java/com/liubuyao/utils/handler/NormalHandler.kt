@@ -16,7 +16,7 @@ class NormalHandler : BaseHandler() {
         return false
     }
 
-    fun formatData(any: Any): String {
+    private fun formatData(any: Any): String {
         return any.toString()
     }
 }

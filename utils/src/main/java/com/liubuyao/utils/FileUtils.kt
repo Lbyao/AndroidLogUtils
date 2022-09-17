@@ -2,11 +2,31 @@ package com.liubuyao.utils
 
 import android.os.Build
 import java.io.File
+import java.io.FilenameFilter
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.StandardOpenOption
 
 object FileUtils {
+
+    /**
+     * 文件存在
+     * @return 是否存在
+     */
+    fun fileExists(path: String?): Boolean {
+        if (path == null) return false
+        val file = getFile(path) ?: return false
+        return file.exists()
+    }
+
+    /**
+     * 文件存在
+     * @return 是否存在
+     */
+    fun fileExists(file: File?): Boolean {
+        if (file == null) return false
+        return file.exists()
+    }
 
     /**
      * 通过路径获取文件
@@ -62,12 +82,10 @@ object FileUtils {
                     Files.write(file.toPath(), content.toByteArray(), StandardOpenOption.CREATE_NEW)
                 }
             } else {
-                file.bufferedWriter().use {
-                    if (append) {
-                        it.append(content)
-                    } else {
-                        it.write(content)
-                    }
+                if (append) {
+                    file.appendText(content)
+                } else {
+                    file.writeText(content)
                 }
             }
             return true
@@ -76,5 +94,47 @@ object FileUtils {
         }
     }
 
+    /**
+     * 删除文件
+     */
+    fun deleteFile(path: String?): Boolean {
+        return getFile(path)?.delete() ?: false
+    }
+
+    /**
+     * 获取文件列表
+     */
+    fun getFileListByFile(path: String?, filterFilename: String, suffix: String): Array<String>? {
+        val file = getFile(path)
+        if (file != null) {
+            val list = if (file.isFile) {
+                val parentFile = file.parentFile
+                parentFile?.list(object : FilenameFilter {
+                    override fun accept(dir: File?, name: String?): Boolean {
+                        if (name != null) {
+                            if (name.contains(filterFilename) && name.endsWith(".$suffix")) {
+                                return true
+                            }
+                        }
+                        return false
+                    }
+                })
+            } else {
+                file.list(object : FilenameFilter {
+                    override fun accept(dir: File?, name: String?): Boolean {
+                        if (name != null) {
+                            if (name.contains(filterFilename) && name.endsWith(".$suffix")) {
+                                return true
+                            }
+                        }
+                        return false
+                    }
+
+                })
+            }
+            return list
+        }
+        return null
+    }
 
 }

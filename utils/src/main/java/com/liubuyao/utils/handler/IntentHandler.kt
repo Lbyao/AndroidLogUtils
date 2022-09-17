@@ -19,7 +19,7 @@ class IntentHandler : BaseHandler() {
         return false
     }
 
-    private fun formatData(intent: Intent): String {
-        return MyUtils.intentToString(intent)
+    private fun formatData(intent: Intent, isFormat: Boolean = true): String {
+        return MyUtils.intentToString(intent, isFormat)
     }
 }

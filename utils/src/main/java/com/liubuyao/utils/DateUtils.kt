@@ -1,5 +1,6 @@
 package com.liubuyao.utils
 
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -55,11 +56,28 @@ object DateUtils {
     fun getNowDate() = Date()
 
     /**
+     * @return Long
+     */
+    fun getNowDateTime() = Date().time
+
+    /**
      * 格式化日期
      * @return string
      */
     fun formatDate(date: Date, format: String): String {
         return SimpleDateFormat(format, Locale.getDefault()).format(date)
+    }
+
+    /**
+     * 获取日期
+     */
+    fun getDataByStr(dateStr: String?, format: String): Date? {
+        if (dateStr==null) return null
+        return try {
+            SimpleDateFormat(format, Locale.getDefault()).parse(dateStr)
+        } catch (e: ParseException) {
+            null
+        }
     }
 
 }

@@ -19,7 +19,7 @@ class BundleHandler : BaseHandler() {
         return false
     }
 
-    private fun formatData(bundle: Bundle): String {
-        return MyUtils.bundleToJsonString(bundle)
+    private fun formatData(bundle: Bundle, isFormat: Boolean = true): String {
+        return MyUtils.bundleToJsonString(bundle, isFormat)
     }
 }

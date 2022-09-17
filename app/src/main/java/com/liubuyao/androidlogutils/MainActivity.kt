@@ -2,6 +2,7 @@ package com.liubuyao.androidlogutils
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.widget.AppCompatButton
 import com.liubuyao.utils.CrashUtils
 import com.liubuyao.utils.LogUtils
@@ -18,12 +19,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+
         findViewById<AppCompatButton>(R.id.btnTest).setOnClickListener {
 //            findViewById<TextView>(R.id.tvText).text = list[2]
-            LogUtils.d("btnTest")
+//            LogUtils.d("这都没超过-btnTest".repeat(2000))
             val list = mutableListOf<User>()
             list.add(User("test",2,false))
-            list.add(User("test2",22,true))
+            list.add(User("这都没超过-test2".repeat(2000),22,true))
             LogUtils.d(list)
 
             val map = mutableMapOf<String,User>()
