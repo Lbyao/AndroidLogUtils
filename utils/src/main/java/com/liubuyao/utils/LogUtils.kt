@@ -2,6 +2,7 @@ package com.liubuyao.utils
 
 import android.util.Log
 import com.liubuyao.utils.handler.*
+import java.util.*
 
 /**
  * 日志工具类
@@ -36,7 +37,7 @@ object LogUtils {
      * 保存文件开关
      */
     @Volatile
-    private var isFileSwitch = true
+    private var isFileSwitch = false
 
     /**
      * 保存文件的日志等级
@@ -202,8 +203,10 @@ object LogUtils {
     @Synchronized
     private fun printLog(string: String, type: Int = D, tag: String) {
         val stringBuilder = StringBuilder()
-        stringBuilder.append("=".repeat(20)).append("start").append("=".repeat(20))
-            .append("\n").append(string).append("\n").append("=".repeat(20))
+        stringBuilder.append("=".repeat(20)).append("start").append("=".repeat(20)).append("\n")
+            .append(MyUtils.getNowDate(DateUtils.FORMAT_YMD_HMS_SAVE)).append("\n")
+        getClassInfo(stringBuilder)
+        stringBuilder.append(string).append("\n").append("=".repeat(20))
             .append("end")
             .append("=".repeat(20)).append("\n")
         if (isLogSwitch) {
@@ -275,6 +278,29 @@ object LogUtils {
                 if (dataByStr.time <= deleteTime) {
                     MyUtils.deleteFile(mLogFilePath + Constants.separtor + file)
                 }
+            }
+        }
+    }
+
+    private fun getClassInfo(stringBuilder: StringBuilder) {
+        val stackTraces = Thread.currentThread().stackTrace
+        var index = 0
+        for (stack in stackTraces) {
+            if (!stack.className.contains("com.liubuyao.utils")) {
+                if (index==2){
+                    val head: String = Formatter()
+                        .format(
+                            "%s, %s.%s(%s:%d)",
+                            Thread.currentThread().name,
+                            stack.className,
+                            stack.methodName,
+                            stack.fileName,
+                            stack.lineNumber
+                        )
+                        .toString()
+                    stringBuilder.append("[").append(head).append("]").append("\n")
+                }
+                index++
             }
         }
     }

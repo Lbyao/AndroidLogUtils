@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.widget.AppCompatButton
+import com.liubuyao.androidlogutils.test.Utils
 import com.liubuyao.utils.CrashUtils
 import com.liubuyao.utils.LogUtils
 
@@ -19,7 +20,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        val map = mutableMapOf<String,User>()
+        map["key1"] = User("test",2,false)
+        map["key2"] = User("test2",22,true)
+        LogUtils.d(map)
 
         findViewById<AppCompatButton>(R.id.btnTest).setOnClickListener {
 //            findViewById<TextView>(R.id.tvText).text = list[2]
@@ -33,6 +37,8 @@ class MainActivity : AppCompatActivity() {
             map["key1"] = User("test",2,false)
             map["key2"] = User("test2",22,true)
             LogUtils.d(map)
+
+            Utils.test()
         }
 
         findViewById<AppCompatButton>(R.id.btnOpen).setOnClickListener {
