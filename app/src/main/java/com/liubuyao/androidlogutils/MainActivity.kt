@@ -25,13 +25,18 @@ class MainActivity : AppCompatActivity() {
         map["key2"] = User("test2",22,true)
         LogUtils.d(map)
 
+
+
         findViewById<AppCompatButton>(R.id.btnTest).setOnClickListener {
 //            findViewById<TextView>(R.id.tvText).text = list[2]
 //            LogUtils.d("这都没超过-btnTest".repeat(2000))
             val list = mutableListOf<User>()
             list.add(User("test",2,false))
             list.add(User("这都没超过-test2".repeat(2000),22,true))
-            LogUtils.d(list)
+            LogUtils.setFileSwitch(true)
+            for(i in 0..100){
+                LogUtils.d(list)
+            }
 
             val map = mutableMapOf<String,User>()
             map["key1"] = User("test",2,false)
