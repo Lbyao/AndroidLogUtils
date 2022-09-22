@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import okhttp3.Request
+import okhttp3.Response
 import java.util.*
 
 /**
@@ -225,5 +227,13 @@ internal object MyUtils {
 
     fun getNowDateTime(date: String): Long? {
         return getDataByStr(date)?.time
+    }
+
+    fun getRequestToString(request: Request?): Map<String, String> {
+        return StringUtils.getRequestToString(request)
+    }
+
+    fun getResponseToString(response: Response?): Map<String, String> {
+        return StringUtils.getResponseToString(response)
     }
 }
