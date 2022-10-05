@@ -236,4 +236,8 @@ internal object MyUtils {
     fun getResponseToString(response: Response?): Map<String, String> {
         return StringUtils.getResponseToString(response)
     }
+
+    fun formatJson(json: String?, indentSpaces: Int = 4): String {
+        return JsonUtils.formatJson(json, indentSpaces)
+    }
 }

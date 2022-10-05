@@ -200,6 +200,47 @@ object LogUtils {
         })
     }
 
+    fun log(type: Int = D, tag: String = mTag, content: Any?) {
+        startHandler.handleObject(content, object : BaseHandler.OnFormatListener {
+            override fun format(string: String) {
+                printLogNormal(string, type, tag)
+            }
+        })
+    }
+
+    @Synchronized
+    private fun printLogNormal(string: String, type: Int = D, tag: String) {
+        val stringBuilder = StringBuilder()
+        stringBuilder.append(string)
+        if (isLogSwitch) {
+            if (stringBuilder.contains("\n")) {
+                formatLog(stringBuilder.toString(), type, tag)
+            } else {
+                val split = stringBuilder.split("\n")
+                //较长的字符串，先用换行符分隔打印
+                //为啥用换行符呢，因为换行符本来就换行打印，不会影响一致性
+                for (str in split) {
+                    formatLog(str, type, tag)
+                }
+            }
+
+        }
+        if (isFileSwitch) {
+            if (type >= saveFileLevel) {
+                val filePath =
+                    mLogFilePath + Constants.separtor + mLogFileName + "_" + MyUtils.getNowDate(
+                        DateUtils.FORMAT_YMD_upload
+                    ) + "." + mLogFileSuffix
+                deleteLog(mLogFilePath, MyUtils.getNowDate(DateUtils.FORMAT_YMD_upload))
+                MyUtils.writeToFile(
+                    filePath,
+                    if (MyUtils.fileExists(filePath)) stringBuilder.toString() else MyUtils.getPhoneInfo() + "\n" + stringBuilder.toString(),
+                    true
+                )
+            }
+        }
+    }
+
     @Synchronized
     private fun printLog(string: String, type: Int = D, tag: String) {
         val stringBuilder = StringBuilder()
@@ -210,36 +251,11 @@ object LogUtils {
             .append("end")
             .append("=".repeat(20)).append("\n")
         if (isLogSwitch) {
-            if (stringBuilder.length <= 1000) {
-                Log.println(type, tag, stringBuilder.toString())
-            } else {
-                val encodeToByteArray = stringBuilder.toString().encodeToByteArray()
-                if (encodeToByteArray.size <= MAX_LENGTH) {
-                    Log.println(type, tag, stringBuilder.toString())
-                } else {
-                    //较长的字符串，先用换行符分隔打印
-                    //为啥用换行符呢，因为换行符本来就换行打印，不会影响一致性
-                    val split = stringBuilder.split("\n")
-                    for (str in split) {
-                        var strByteArray = str.encodeToByteArray()
-                        //判断字节数是否超出
-                        if (strByteArray.size <= MAX_LENGTH) {
-                            Log.println(type, tag, str)
-                        } else {
-                            //如果超出，截取字符串
-                            while (MAX_LENGTH < strByteArray.size) {
-                                val subStr = MyUtils.subStr(strByteArray, MAX_LENGTH)
-                                Log.println(type, tag, subStr)
-                                strByteArray = strByteArray.copyOfRange(
-                                    subStr.encodeToByteArray().size,
-                                    strByteArray.size
-                                )
-                            }
-                            //把截取后剩余的字符串打印
-                            Log.println(type, tag, String(strByteArray))
-                        }
-                    }
-                }
+            val split = stringBuilder.split("\n")
+            //较长的字符串，先用换行符分隔打印
+            //为啥用换行符呢，因为换行符本来就换行打印，不会影响一致性
+            for (str in split) {
+                formatLog(str, type, tag)
             }
         }
         if (isFileSwitch) {
@@ -254,6 +270,35 @@ object LogUtils {
                     if (MyUtils.fileExists(filePath)) stringBuilder.toString() else MyUtils.getPhoneInfo() + "\n" + stringBuilder.toString(),
                     true
                 )
+            }
+        }
+    }
+
+    private fun formatLog(str: String, type: Int, tag: String) {
+        if (str.length <= 1000) {
+            Log.println(type, tag, str)
+        } else {
+            val encodeToByteArray = str.encodeToByteArray()
+            if (encodeToByteArray.size <= MAX_LENGTH) {
+                Log.println(type, tag, str)
+            } else {
+                var strByteArray = str.encodeToByteArray()
+                //判断字节数是否超出
+                if (strByteArray.size <= MAX_LENGTH) {
+                    Log.println(type, tag, str)
+                } else {
+                    //如果超出，截取字符串
+                    while (MAX_LENGTH < strByteArray.size) {
+                        val subStr = MyUtils.subStr(strByteArray, MAX_LENGTH)
+                        Log.println(type, tag, subStr)
+                        strByteArray = strByteArray.copyOfRange(
+                            subStr.encodeToByteArray().size,
+                            strByteArray.size
+                        )
+                    }
+                    //把截取后剩余的字符串打印
+                    Log.println(type, tag, String(strByteArray))
+                }
             }
         }
     }
@@ -287,7 +332,7 @@ object LogUtils {
         var index = 0
         for (stack in stackTraces) {
             if (!stack.className.contains("com.liubuyao.utils")) {
-                if (index==2){
+                if (index == 2) {
                     val head: String = Formatter()
                         .format(
                             "%s, %s.%s(%s:%d)",

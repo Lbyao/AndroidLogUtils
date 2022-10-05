@@ -1,5 +1,7 @@
 package com.liubuyao.utils.handler
 
+import com.liubuyao.utils.MyUtils
+
 /**
  * 基本数据格式
  *
@@ -17,6 +19,6 @@ class NormalHandler : BaseHandler() {
     }
 
     private fun formatData(any: Any): String {
-        return any.toString()
+        return MyUtils.formatJson(any.toString())
     }
 }

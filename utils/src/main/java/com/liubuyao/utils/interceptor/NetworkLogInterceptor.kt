@@ -32,7 +32,7 @@ class NetworkLogInterceptor : Interceptor {
         networkLogMap.putAll(responseToString)
         //解析的時間
         networkLogMap["network_end_response_string"] = "${responseStringMillis - responseMillis}"
-        LogUtils.d(networkLogMap)
+        LogUtils.log(content = MyUtils.mapToJsonString(networkLogMap, true))
         return response
     }
 }
