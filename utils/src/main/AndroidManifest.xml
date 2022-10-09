@@ -7,6 +7,12 @@
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
+        <activity
+            android:name=".bluetoothUtils.ui.BluetoothListActivity"
+            android:exported="true"
+            android:label=""
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
        <!--    声明Provider应用启动时初始化library    -->
         <provider
             android:authorities="${applicationId}.SuperUtilsProvider"

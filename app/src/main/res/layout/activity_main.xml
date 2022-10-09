@@ -29,4 +29,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnScanBT"
+        android:text="扫描蓝牙列表"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnStopScanBT"
+        android:text="停止扫描蓝牙列表"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>

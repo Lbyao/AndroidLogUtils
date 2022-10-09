@@ -1,18 +1,19 @@
 package com.liubuyao.androidlogutils
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.ActionBar
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatButton
 import com.liubuyao.androidlogutils.network.RetrofitUtils
 import com.liubuyao.androidlogutils.test.Utils
 import com.liubuyao.utils.CrashUtils
 import com.liubuyao.utils.LogUtils
+import com.liubuyao.utils.ToastUtils
+import com.liubuyao.utils.bluetoothUtils.BluetoothHelper
+import com.liubuyao.utils.bluetoothUtils.ui.BluetoothListActivity
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
 
 /**
  * @author lby
@@ -22,9 +23,20 @@ class MainActivity : AppCompatActivity() {
     val list = mutableListOf<String>()
     var isOpen = true
 
+    lateinit var acLauncher: ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        BluetoothHelper.init(this@MainActivity)
+        BluetoothHelper.init(this)
+
+        acLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            ToastUtils.showToast("result:$it")
+        }
 
         val map = mutableMapOf<String, User>()
         map["key1"] = User("test", 2, false)
@@ -64,6 +76,15 @@ class MainActivity : AppCompatActivity() {
                 val articleList = RetrofitUtils.getService().getArticleList(0)
 //                LogUtils.d(articleList)
             }
+        }
+
+        findViewById<AppCompatButton>(R.id.btnScanBT).setOnClickListener {
+            BluetoothHelper.searchLeDevices()
+//            BluetoothHelper.searchDevices()
+            acLauncher.launch(Intent(this, BluetoothListActivity::class.java))
+        }
+        findViewById<AppCompatButton>(R.id.btnStopScanBT).setOnClickListener {
+            BluetoothHelper.stopSearchLeDevices()
         }
 
     }
