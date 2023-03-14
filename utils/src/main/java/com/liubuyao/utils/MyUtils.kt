@@ -240,4 +240,8 @@ internal object MyUtils {
     fun formatJson(json: String?, indentSpaces: Int = 4): String {
         return JsonUtils.formatJson(json, indentSpaces)
     }
+
+    fun bytes2HexString(bytes: ByteArray?): String? {
+        return ConvertUtils.bytes2HexString(bytes)
+    }
 }

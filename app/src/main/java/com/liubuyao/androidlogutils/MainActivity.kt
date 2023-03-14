@@ -62,6 +62,8 @@ class MainActivity : AppCompatActivity() {
             LogUtils.d(map)
 
             Utils.test()
+
+            throw  RuntimeException("Test Crash");
         }
 
         findViewById<AppCompatButton>(R.id.btnOpen).setOnClickListener {
@@ -86,6 +88,5 @@ class MainActivity : AppCompatActivity() {
         findViewById<AppCompatButton>(R.id.btnStopScanBT).setOnClickListener {
             BluetoothHelper.stopSearchLeDevices()
         }
-
     }
 }
