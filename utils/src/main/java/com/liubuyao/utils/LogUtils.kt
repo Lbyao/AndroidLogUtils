@@ -87,6 +87,7 @@ object LogUtils {
     private var mLogFileDays = 1
 
     fun init() {
+        handlers.clear()
         handlers.add(NormalHandler())
         handlers.add(ArrayHandler())
         handlers.add(CollectionHandler())
@@ -106,8 +107,87 @@ object LogUtils {
         startHandler = handlers[0]
     }
 
-    fun addHandler(handler: BaseHandler) {
-        handlers.add(handlers.size - 1, handler)
+    private fun initNew() {
+        handlers.add(NormalHandler())
+        handlers.add(ArrayHandler())
+        handlers.add(CollectionHandler())
+        handlers.add(BundleHandler())
+        handlers.add(IntentHandler())
+        handlers.add(MapHandler())
+        handlers.add(ThrowableHandler())
+        handlers.add(UriHandler())
+        handlers.add(DefaultHandler())
+
+        val len = handlers.size
+        for (i in 0 until len) {
+            if (i > 0) {
+                handlers[i - 1].setNextHandler(handlers[i])
+            }
+        }
+        startHandler = handlers[0]
+    }
+
+    /**
+     * 首先调用自定义handler
+     * 添加自定义解析，添加到第一位
+     */
+    fun addHandlersByFirst(vararg handlerList: BaseHandler) {
+        handlers.clear()
+        for (handler in handlerList){
+            handlers.add(handler)
+        }
+        initNew()
+        d(handlers)
+    }
+
+    /**
+     * 首先调用自定义handler
+     * 添加自定义解析，添加到第一位
+     */
+    fun addHandlersByFirst(handlerList: List<BaseHandler>) {
+        handlers.clear()
+        for (handler in handlerList){
+            handlers.add(handler)
+        }
+        initNew()
+        d(handlers)
+    }
+
+    /**
+     * 首先调用自定义handler
+     * 添加自定义解析，添加到最后一位
+     */
+    fun addHandlersByLast(vararg handlerList: BaseHandler) {
+        handlers.removeLast()
+        for (handler in handlerList){
+            handlers.add(handler)
+        }
+        handlers.add(DefaultHandler())
+        val len = handlers.size
+        for (i in 0 until len) {
+            if (i > 0) {
+                handlers[i - 1].setNextHandler(handlers[i])
+            }
+        }
+        d(handlers)
+    }
+
+    /**
+     * 首先调用自定义handler
+     * 添加自定义解析，添加到最后一位
+     */
+    fun addHandlersByLast(handlerList: List<BaseHandler>) {
+        handlers.removeLast()
+        for (handler in handlerList){
+            handlers.add(handler)
+        }
+        handlers.add(DefaultHandler())
+        val len = handlers.size
+        for (i in 0 until len) {
+            if (i > 0) {
+                handlers[i - 1].setNextHandler(handlers[i])
+            }
+        }
         d(handlers)
     }
 
